@@ -51,6 +51,7 @@
     </ApplicationDefinition>
     <Compile Include="Modell\Stopwatch.cs" />
     <Compile Include="ViewModell\RelayCommand.cs" />
+    <Compile Include="ViewModell\VMStopwatch.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
