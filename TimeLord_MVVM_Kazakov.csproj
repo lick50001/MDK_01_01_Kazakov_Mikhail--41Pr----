@@ -49,6 +49,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Modell\Stopwatch.cs" />
     <Compile Include="ViewModell\RelayCommand.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -87,7 +88,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Modell\" />
     <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
