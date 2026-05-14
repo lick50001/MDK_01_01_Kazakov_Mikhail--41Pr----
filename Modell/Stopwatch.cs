@@ -9,10 +9,13 @@ namespace TimeLord_MVVM_Kazakov.Modell
     {
         private RelayCommand intervalTimer;
         private RelayCommand startTimer;
-        public ObservableCollection<string> Interval {  get; set; }
+
+        public ObservableCollection<string> Interval { get; set; }
         public bool Work;
+
         private int time;
         private string textButton = "Начать";
+
         public RelayCommand IntervalTimer
         {
             get
@@ -22,9 +25,11 @@ namespace TimeLord_MVVM_Kazakov.Modell
                     {
                         if (Work)
                             Interval.Insert(0, Timer);
-                    }));
+                    },
+                    obj => true));
             }
         }
+
         public RelayCommand StartTimer
         {
             get
@@ -44,28 +49,26 @@ namespace TimeLord_MVVM_Kazakov.Modell
                             Work = false;
                             TextButton = "Начать";
                         }
-                    }));
+                    },
+                    obj => true));
             }
         }
+
         public Stopwatch()
         {
             Interval = new ObservableCollection<string>();
         }
+
         public string TextButton
         {
             get { return textButton; }
             set { textButton = value; OnPropertyChanged("TextButton"); }
         }
+
         public int Time
         {
             get { return time; }
-            set { time = value; OnPropertyChanged("Timer"); }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null) 
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            set { time = value; OnPropertyChanged("Time"); OnPropertyChanged("Timer"); }
         }
 
         public string Timer
@@ -75,15 +78,20 @@ namespace TimeLord_MVVM_Kazakov.Modell
                 float Hour = (Time / 60f / 60f);
                 float Minute = (Time / 60f) - ((int)Hour * 60f);
                 float Second = Time - (int)Hour * 60f * 60f - (int)Minute * 60f;
-                string sHour = ((int)Hour).ToString();
-                string sMinute = ((int)Minute).ToString();
-                string sSecond = ((int)Second).ToString();
-                if (Hour < 10) sHour = "0" + ((int)Hour).ToString();
-                if (Minute < 10) sMinute = "0" + ((int)Minute).ToString();
-                if (Second < 10) sSecond = "0" + ((int)Second).ToString();
-                return $" {sHour}: {sMinute}: {sSecond}";
 
+                string sHour = ((int)Hour).ToString().PadLeft(2, '0');
+                string sMinute = ((int)Minute).ToString().PadLeft(2, '0');
+                string sSecond = ((int)Second).ToString().PadLeft(2, '0');
+
+                return $"{sHour}:{sMinute}:{sSecond}";
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string prop)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

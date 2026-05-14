@@ -1,27 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+using System.Runtime.CompilerServices;
 using System.Windows.Threading;
+using TimeLord_MVVM_Kazakov.Modell;
 
 namespace TimeLord_MVVM_Kazakov.ViewModell
 {
     public class VMStopwatch : INotifyPropertyChanged
     {
         public Stopwatch Stopwatch { get; set; }
+
         private DispatcherTimer Timer = new DispatcherTimer()
         {
-            Interval = new System.TimeSpan(0, 0, 1)
+            Interval = new TimeSpan(0, 0, 1)
         };
+
         public VMStopwatch()
         {
-            Stopwatch = new Stopwatch()
-            {
-                Work = false,
-                Timer = 0
-            };
+            Stopwatch = new Stopwatch();
             Timer.Tick += Timer_Tick;
             Timer.Start();
         }
@@ -31,13 +27,12 @@ namespace TimeLord_MVVM_Kazakov.ViewModell
             if (Stopwatch.Work)
                 Stopwatch.Time++;
         }
-        public event ProgressChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallMemberName] string prop = "")
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string prop)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
     }
 }
